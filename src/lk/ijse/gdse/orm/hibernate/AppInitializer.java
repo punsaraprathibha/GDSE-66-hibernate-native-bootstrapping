@@ -25,15 +25,17 @@ public class AppInitializer {
     public static void main(String[] args) {
         Customer customer = getCustomer();
 
+        // 1. Save
         CustomerRepository cusRepository = new CustomerRepository();
         int savedCusId = cusRepository.saveCustomer(customer);
-        System.out.println("Saved Cus Id: "
-                + savedCusId);
+        System.out.println("Saved Cus Id: " + savedCusId);
 
+        // 2. Get
         cusRepository = new CustomerRepository();
         Customer existingCustomer = cusRepository.getCustomer(savedCusId);
         System.out.println(existingCustomer);
 
+        // 3. Update
         cusRepository = new CustomerRepository();
         existingCustomer.setAddress("Matara");
         boolean isUpdated = cusRepository.updateCustomer(existingCustomer);
@@ -43,6 +45,7 @@ public class AppInitializer {
             System.out.println("Customer Update Failed!");
         }
 
+        // 4. Delete
         cusRepository = new CustomerRepository();
         boolean isDeleted = cusRepository.deleteCustomer(existingCustomer);
         if (isDeleted) {
@@ -50,42 +53,6 @@ public class AppInitializer {
         } else {
             System.out.println("Customer Deletion Failed!");
         }
-
-
-//        // 1. Save
-//        Session saveSession = SessionFactoryConfig
-//                .getInstance()
-//                .getSession();
-//        Transaction saveTransaction = saveSession.beginTransaction();
-//        saveSession.save(customer); // Persists (Saves) customer object in DB
-//        saveTransaction.commit();
-//        saveSession.close();
-//
-//        // 2. Update
-//        Session updateSession = SessionFactoryConfig
-//                .getInstance()
-//                .getSession();
-//        Transaction updateTransaction = updateSession.beginTransaction();
-//
-//        // 3. Get
-//        Customer customer1 = updateSession.get(Customer.class, 1); // Retrieves (Get) customer data from DB by ID
-//        customer1.setAddress("Hambantota");
-//        customer1.setName("Amara");
-////        updateSession.save(customer1); // You can use this to update an already existing data in DB
-//        updateSession.update(customer1); // Or you can use this to update an already existing data in DB
-//
-//        updateTransaction.commit();
-//        updateSession.close();
-//
-//        // 4. Delete
-//        Session deleteSession = SessionFactoryConfig
-//                .getInstance()
-//                .getSession();
-//        Transaction deleteTransaction = deleteSession.beginTransaction();
-//        Customer deleteCustomer = deleteSession.get(Customer.class, 1);
-//        deleteSession.delete(deleteCustomer); // Deletes a Customer from DB
-//        deleteTransaction.commit();
-//        deleteSession.close();
     }
 
     private static Customer getCustomer() {
