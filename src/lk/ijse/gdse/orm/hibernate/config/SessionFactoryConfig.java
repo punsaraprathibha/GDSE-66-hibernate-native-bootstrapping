@@ -8,6 +8,7 @@ import org.hibernate.boot.MetadataSources;
 import org.hibernate.boot.model.naming.ImplicitNamingStrategyJpaCompliantImpl;
 import org.hibernate.boot.registry.StandardServiceRegistry;
 import org.hibernate.boot.registry.StandardServiceRegistryBuilder;
+import org.hibernate.cfg.Configuration;
 
 /**
  * This is the session factory configuration class
@@ -22,22 +23,10 @@ public class SessionFactoryConfig {
      * to avoid object creation of this class from outside
      */
     private SessionFactoryConfig() {
-        // Creates a Service Registry
-        StandardServiceRegistry serviceRegistry
-                = new StandardServiceRegistryBuilder()
-                .configure()
-                .build();
-
-        // Creates a Metadata Object
-        Metadata metadata = new MetadataSources(serviceRegistry)
-                .addAnnotatedClass(Customer.class)
-                .getMetadataBuilder()
-//                .applyImplicitNamingStrategy(
-//                        ImplicitNamingStrategyJpaCompliantImpl.INSTANCE)
-                .build();
-
         // Creates the Session Factory
-        sessionFactory = metadata
+        sessionFactory = new Configuration()
+                .configure()
+                .addAnnotatedClass(Customer.class)
                 .buildSessionFactory();
     }
 
