@@ -58,13 +58,16 @@ public class AppInitializer {
     private static Customer getCustomer() {
         Customer customer = new Customer();
         customer.setId(1);
-        NameIdentifier nameIdentifier = getNameIdentifier();
-        customer.setNameIdentifier(nameIdentifier);
+//        NameIdentifier nameIdentifier = getNameIdentifier();
+//        customer.setNameIdentifier(nameIdentifier);
+
+        customer.setName("Saman"); // <==== Add
         customer.setAddress("Galle");
         customer.setSalary(25000.00);
+        customer.setAge(20); // <==== Add
 
-        List<MobileNo> mobileNos = getMobileNos();
-        customer.setPhoneNos(mobileNos);
+//        List<MobileNo> mobileNos = getMobileNos();
+//        customer.setPhoneNos(mobileNos);
         return customer;
     }
 

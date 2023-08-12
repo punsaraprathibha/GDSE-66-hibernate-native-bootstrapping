@@ -35,6 +35,8 @@ public class CustomerRepository {
             Customer customer = session.get(Customer.class, id);
             session.close();
             return customer;
+
+//            return session.get(Customer.class, id);
         } catch (Exception e) {
             e.printStackTrace();
             throw e;
