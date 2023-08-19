@@ -3,6 +3,7 @@ package lk.ijse.gdse.orm.hibernate.repository;
 import lk.ijse.gdse.orm.hibernate.config.SessionFactoryConfig;
 import lk.ijse.gdse.orm.hibernate.entity.Customer;
 import lk.ijse.gdse.orm.hibernate.entity.Order;
+import lk.ijse.gdse.orm.hibernate.projection.CustomerProjection;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
 import org.hibernate.query.Query;
@@ -121,6 +122,15 @@ public class CustomerRepository {
     // HQL
     public List<Customer> getCustomersHQL() {
         String sql = "FROM Customer";
+        Query query = session.createQuery(sql);
+        List list = query.list();
+        session.close();
+        return list;
+    }
+
+    public List<CustomerProjection> getCustomerProjection() {
+        String sql = "SELECT new lk.ijse.gdse.orm.hibernate.projection.CustomerProjection(" +
+                "C.id, C.name, C.address) FROM Customer AS C";
         Query query = session.createQuery(sql);
         List list = query.list();
         session.close();

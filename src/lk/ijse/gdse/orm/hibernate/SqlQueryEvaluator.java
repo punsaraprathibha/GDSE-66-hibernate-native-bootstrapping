@@ -2,6 +2,7 @@ package lk.ijse.gdse.orm.hibernate;
 
 import lk.ijse.gdse.orm.hibernate.entity.Customer;
 import lk.ijse.gdse.orm.hibernate.entity.Order;
+import lk.ijse.gdse.orm.hibernate.projection.CustomerProjection;
 import lk.ijse.gdse.orm.hibernate.repository.CustomerRepository;
 
 import java.util.List;
@@ -35,6 +36,14 @@ public class SqlQueryEvaluator {
         CustomerRepository customerRepository3 = new CustomerRepository();
         List<Customer> customersHQL = customerRepository3.getCustomersHQL();
         for (Customer customer : customersHQL) {
+            System.out.println(customer);
+        }
+
+        System.out.println("-------Customer JPQL Projection----");
+
+        CustomerRepository customerRepository4 = new CustomerRepository();
+        List<CustomerProjection> customerProjection = customerRepository4.getCustomerProjection();
+        for (CustomerProjection customer : customerProjection) {
             System.out.println(customer);
         }
     }
