@@ -86,12 +86,22 @@ public class CustomerRepository {
 //    }
 
 
-    // JPQL
+    // JPQL Get ALL
     public List<Customer> getAllCustomerJPQL() {
         String sql = "SELECT C FROM Customer AS C";
         Query query = session.createQuery(sql);
         List list = query.list();
         session.close();
         return list;
+    }
+
+    // JPQL Where
+    public Customer getCustomerById(int id) {
+        String sql = "SELECT C FROM Customer AS C WHERE C.id = :cus_id";
+        Query namedQuery = session.createQuery(sql);
+        namedQuery.setParameter("cus_id", id);
+        Customer customer = (Customer) namedQuery.getSingleResult();
+        session.close();
+        return customer;
     }
 }
