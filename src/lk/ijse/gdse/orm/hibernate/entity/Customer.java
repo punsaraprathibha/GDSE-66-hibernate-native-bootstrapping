@@ -21,7 +21,7 @@ public class Customer {
     @Column(name = "customer_salary")
     private double salary;
 
-    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY, mappedBy = "customer")
+    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER, mappedBy = "customer")
     private List<Order> orders = new ArrayList<>();
 
     public Customer() {}
@@ -72,5 +72,17 @@ public class Customer {
 
     public void setSalary(double salary) {
         this.salary = salary;
+    }
+
+    @Override
+    public String toString() {
+        return "Customer{" +
+                "id=" + id +
+                ", name='" + name + '\'' +
+                ", address='" + address + '\'' +
+                ", age=" + age +
+                ", salary=" + salary +
+                ", orders=" + orders +
+                '}';
     }
 }
