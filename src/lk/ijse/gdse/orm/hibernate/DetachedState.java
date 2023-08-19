@@ -37,10 +37,14 @@ public class DetachedState {
         session1.detach(customer);
 
         System.out.println(
-                "Detatch " + isExistsInSession(session1, customer));
+                isExistsInSession(session1, customer));
+
+        customer.setAddress("Matara");
+        session1.save(customer);
+
+        System.out.println(session1.contains(customer));
 
         session1.close();
-
     }
 
     private static String isExistsInSession(Session session, Customer customer) {
