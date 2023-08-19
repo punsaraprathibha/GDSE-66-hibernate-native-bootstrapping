@@ -6,6 +6,8 @@ import lk.ijse.gdse.orm.hibernate.embedded.MobileNo;
 import lk.ijse.gdse.orm.hibernate.embedded.NameIdentifier;
 import lk.ijse.gdse.orm.hibernate.entity.Customer;
 import lk.ijse.gdse.orm.hibernate.repository.CustomerRepository;
+import lk.ijse.gdse.orm.hibernate.service.CustomerService;
+import lk.ijse.gdse.orm.hibernate.service.impl.CustomerServiceImpl;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
 
@@ -26,19 +28,17 @@ public class AppInitializer {
         Customer customer = getCustomer();
 
         // 1. Save
-        CustomerRepository cusRepository = new CustomerRepository();
-        int savedCusId = cusRepository.saveCustomer(customer);
+        CustomerService customerService = CustomerServiceImpl.getInstance();
+        int savedCusId = customerService.saveCustomer(customer);
         System.out.println("Saved Cus Id: " + savedCusId);
 
         // 2. Get
-        cusRepository = new CustomerRepository();
-        Customer existingCustomer = cusRepository.getCustomer(savedCusId);
+        Customer existingCustomer = customerService.getCustomer(savedCusId);
         System.out.println(existingCustomer);
 
         // 3. Update
-        cusRepository = new CustomerRepository();
         existingCustomer.setAddress("Matara");
-        boolean isUpdated = cusRepository.updateCustomer(existingCustomer);
+        boolean isUpdated = customerService.updateCustomer(existingCustomer);
         if (isUpdated) {
             System.out.println("Customer Updated!");
         } else {
@@ -46,8 +46,7 @@ public class AppInitializer {
         }
 
         // 4. Delete
-        cusRepository = new CustomerRepository();
-        boolean isDeleted = cusRepository.deleteCustomer(existingCustomer);
+        boolean isDeleted = customerService.deleteCustomer(existingCustomer);
         if (isDeleted) {
             System.out.println("Customer Deleted!");
         } else {

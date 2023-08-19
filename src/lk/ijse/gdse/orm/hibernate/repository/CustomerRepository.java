@@ -12,70 +12,28 @@ import java.util.List;
 
 public class CustomerRepository {
 
-    private final Session session;
+    private Session session;
 
-    public CustomerRepository() {
-        session = SessionFactoryConfig
-                .getInstance()
-                .getSession();
+    public CustomerRepository() {}
+
+    public void setSession(Session session) {
+        this.session = session;
     }
 
     public int saveCustomer(Customer customer) {
-        Transaction transaction = session.beginTransaction();
-        try {
-            int customerId = (int) session.save(customer);
-            transaction.commit();
-            session.close();
-            return customerId;
-        } catch (Exception e) {
-            transaction.rollback();
-            session.close();
-            e.printStackTrace();
-            return -1;
-        }
+        return (int) session.save(customer);
     }
 
     public Customer getCustomer(int id) {
-        try {
-            Customer customer = session.get(Customer.class, id);
-            session.close();
-            return customer;
-
-//            return session.get(Customer.class, id);
-        } catch (Exception e) {
-            e.printStackTrace();
-            throw e;
-        }
+        return session.get(Customer.class, id);
     }
 
-    public boolean updateCustomer(Customer customer) {
-        Transaction transaction = session.beginTransaction();
-        try {
+    public void updateCustomer(Customer customer) {
             session.update(customer);
-            transaction.commit();
-            session.close();
-            return true;
-        } catch (Exception e) {
-            transaction.rollback();
-            session.close();
-            e.printStackTrace();
-            return false;
-        }
     }
 
-    public boolean deleteCustomer(Customer customer) {
-        Transaction transaction = session.beginTransaction();
-        try {
+    public void deleteCustomer(Customer customer) {
             session.delete(customer);
-            transaction.commit();
-            session.close();
-            return true;
-        } catch (Exception e) {
-            transaction.rollback();
-            session.close();
-            e.printStackTrace();
-            return false;
-        }
     }
 
 //    public List<Customer> getAllCustomerNative() {
