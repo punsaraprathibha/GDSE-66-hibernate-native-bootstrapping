@@ -1,8 +1,10 @@
 package lk.ijse.gdse.orm.hibernate.service.impl;
 
 import lk.ijse.gdse.orm.hibernate.config.SessionFactoryConfig;
+import lk.ijse.gdse.orm.hibernate.dto.CustomerDto;
 import lk.ijse.gdse.orm.hibernate.entity.Customer;
 import lk.ijse.gdse.orm.hibernate.repository.CustomerRepository;
+import lk.ijse.gdse.orm.hibernate.repository.impl.CustomerRepositoryImpl;
 import lk.ijse.gdse.orm.hibernate.service.CustomerService;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
@@ -13,7 +15,7 @@ public class CustomerServiceImpl implements CustomerService {
     private final CustomerRepository customerRepository;
 
     private CustomerServiceImpl() {
-        customerRepository = new CustomerRepository();
+        customerRepository = (CustomerRepository) new CustomerRepositoryImpl();
     }
 
     public static CustomerServiceImpl getInstance() {
@@ -23,12 +25,12 @@ public class CustomerServiceImpl implements CustomerService {
     }
 
     @Override
-    public int saveCustomer(Customer customer) {
+    public int saveCustomer(CustomerDto customer) {
         Session session = SessionFactoryConfig.getInstance().getSession();
         Transaction transaction = session.beginTransaction();
         try {
             customerRepository.setSession(session);
-            int customerId = customerRepository.saveCustomer(customer);
+            int customerId = customerRepository.saveCustomer(customer.toEntity());
             transaction.commit();
             session.close();
             return customerId;
@@ -41,13 +43,13 @@ public class CustomerServiceImpl implements CustomerService {
     }
 
     @Override
-    public Customer getCustomer(int id) {
+    public CustomerDto getCustomer(int id) {
         Session session = SessionFactoryConfig.getInstance().getSession();
         try {
             customerRepository.setSession(session);
             Customer customer = customerRepository.getCustomer(id);
             session.close();
-            return customer;
+            return customer.toDto();
         } catch (Exception e) {
             e.printStackTrace();
             throw e;
@@ -55,12 +57,12 @@ public class CustomerServiceImpl implements CustomerService {
     }
 
     @Override
-    public boolean updateCustomer(Customer customer) {
+    public boolean updateCustomer(CustomerDto customer) {
         Session session = SessionFactoryConfig.getInstance().getSession();
         Transaction transaction = session.beginTransaction();
         try {
             customerRepository.setSession(session);
-            customerRepository.updateCustomer(customer);
+            customerRepository.updateCustomer(customer.toEntity());
             transaction.commit();
             session.close();
             return true;
@@ -73,12 +75,12 @@ public class CustomerServiceImpl implements CustomerService {
     }
 
     @Override
-    public boolean deleteCustomer(Customer customer) {
+    public boolean deleteCustomer(CustomerDto customer) {
         Session session = SessionFactoryConfig.getInstance().getSession();
         Transaction transaction = session.beginTransaction();
         try {
             customerRepository.setSession(session);
-            customerRepository.deleteCustomer(customer);
+            customerRepository.deleteCustomer(customer.toEntity());
             transaction.commit();
             session.close();
             return true;

@@ -1,14 +1,15 @@
 package lk.ijse.gdse.orm.hibernate.service;
 
+import lk.ijse.gdse.orm.hibernate.dto.CustomerDto;
 import lk.ijse.gdse.orm.hibernate.entity.Customer;
 
 public interface CustomerService {
 
-    int saveCustomer(Customer customer);
+    int saveCustomer(CustomerDto customer);
 
-    Customer getCustomer(int id);
+    CustomerDto getCustomer(int id);
 
-    boolean updateCustomer(Customer customer);
+    boolean updateCustomer(CustomerDto customer);
 
-    boolean deleteCustomer(Customer customer);
+    boolean deleteCustomer(CustomerDto customer);
 }

@@ -1,5 +1,7 @@
 package lk.ijse.gdse.orm.hibernate.entity;
 
+import lk.ijse.gdse.orm.hibernate.dto.CustomerDto;
+
 import javax.persistence.*;
 import java.util.ArrayList;
 import java.util.List;
@@ -84,5 +86,16 @@ public class Customer {
                 ", salary=" + salary +
                 ", orders=" + orders +
                 '}';
+    }
+
+
+    public CustomerDto toDto() {
+        CustomerDto customerDto = new CustomerDto();
+        customerDto.setId(this.id);
+        customerDto.setName(this.name);
+        customerDto.setAddress(this.address);
+        customerDto.setAge(this.age);
+        customerDto.setSalary(this.salary);
+        return customerDto;
     }
 }

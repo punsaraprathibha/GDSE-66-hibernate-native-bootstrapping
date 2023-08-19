@@ -1,15 +1,12 @@
 package lk.ijse.gdse.orm.hibernate;
 
 
-import lk.ijse.gdse.orm.hibernate.config.SessionFactoryConfig;
+import lk.ijse.gdse.orm.hibernate.dto.CustomerDto;
 import lk.ijse.gdse.orm.hibernate.embedded.MobileNo;
 import lk.ijse.gdse.orm.hibernate.embedded.NameIdentifier;
 import lk.ijse.gdse.orm.hibernate.entity.Customer;
-import lk.ijse.gdse.orm.hibernate.repository.CustomerRepository;
 import lk.ijse.gdse.orm.hibernate.service.CustomerService;
 import lk.ijse.gdse.orm.hibernate.service.impl.CustomerServiceImpl;
-import org.hibernate.Session;
-import org.hibernate.Transaction;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -25,7 +22,7 @@ public class AppInitializer {
      * Main method of this Application
      */
     public static void main(String[] args) {
-        Customer customer = getCustomer();
+        CustomerDto customer = getCustomer();
 
         // 1. Save
         CustomerService customerService = CustomerServiceImpl.getInstance();
@@ -33,7 +30,7 @@ public class AppInitializer {
         System.out.println("Saved Cus Id: " + savedCusId);
 
         // 2. Get
-        Customer existingCustomer = customerService.getCustomer(savedCusId);
+        CustomerDto existingCustomer = customerService.getCustomer(savedCusId);
         System.out.println(existingCustomer);
 
         // 3. Update
@@ -54,8 +51,8 @@ public class AppInitializer {
         }
     }
 
-    private static Customer getCustomer() {
-        Customer customer = new Customer();
+    private static CustomerDto getCustomer() {
+        CustomerDto customer = new CustomerDto();
         customer.setId(1);
 //        NameIdentifier nameIdentifier = getNameIdentifier();
 //        customer.setNameIdentifier(nameIdentifier);
